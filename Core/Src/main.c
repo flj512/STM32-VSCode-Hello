@@ -16,6 +16,7 @@
   ******************************************************************************
   */
  #include <stdio.h>
+ #include "cpplib.h"
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -122,7 +123,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
     toggle_led();
     coarse_delay(1000);
-    printf("Hello World!\r\n");
+    printf("Hello World, 1 + 1 = %d!\r\n", add(1, 1));
   }
   /* USER CODE END 3 */
 }
