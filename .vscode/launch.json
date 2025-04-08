@@ -3,5 +3,47 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": []
+
+    "configurations": [
+        // Cortex-Debug configuration
+        // You need to install the Cortex-Debug extension first
+        // The OpenOCD server will be started automatically
+        {
+            "cwd": "${workspaceRoot}",
+            "executable": "./build/Debug/Hello.elf",
+            "name": "Hello - Cortex-Debug",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "configFiles": ["openocd.cfg"],
+            "searchDir": [],
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "none"
+        },
+        // Connect GDB to the OpenOCD server
+        // You need start the OpenOCD server manually and
+        // Make sure you have run program command in OpenOCD telnet console 
+        // to download the latest program to the device's flash rom
+        {
+            "name": "Hello - GDB",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/Hello.elf",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "arm-none-eabi-gdb",
+            "miDebuggerServerAddress": "localhost:3333",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
 }

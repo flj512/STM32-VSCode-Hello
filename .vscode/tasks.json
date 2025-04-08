@@ -2,6 +2,8 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "2.0.0",
+    // Program the STM32F4xx and verify the flash, then reset the chip
+    // OpenOCD exits after programming
     "tasks": [
         {
             "label": "OpenOCD Program - STM32",
@@ -9,14 +11,12 @@
             "command": "openocd",
             "args": [
                 "-f",
-                "interface/cmsis-dap.cfg",
-                "-f",
-                "target/stm32f4x.cfg",
+                "${workspaceFolder}/openocd.cfg",
                 "-c",
-                "program build/Debug/Hello.elf verify reset exit"
+                "program build/Release/Hello.elf verify reset exit" 
             ],
             "group": {
-                "kind": "build",
+                "kind": "none",
                 "isDefault": true
             },
             "presentation": {
@@ -44,6 +44,47 @@
                 "runOn": "folderOpen"
             },
             "detail": "Download code to STM32F4xx by OpenOCD"
+        },
+        // This task is used to start the OpenOCD server for STM32F4xx
+        // Use telnet to connect to localhost:4444 and do program, reset, etc in the telnet console
+        // Use gdb to connect to localhost:3333 to debug the program
+        {
+            "label": "OpenOCD Server - STM32",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f",
+                "${workspaceFolder}/openocd.cfg",
+            ],
+            "group": {
+                "kind": "none",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "focus": true,
+                "echo": true,
+                "clear": false
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^\\s*\\[\\d+\\]\\s*([0-9a-fA-F]+)\\s*\\(\\d+\\)\\s*.*$",
+                        "file": 1,
+                        "location": 2,
+                        "message": 3
+                    }
+                ]
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "detail": "Start OpenOCD Server for STM32F4xx"
         }
     ]
 }
