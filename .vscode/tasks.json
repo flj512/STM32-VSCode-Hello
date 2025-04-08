@@ -1,0 +1,49 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "OpenOCD Program - STM32",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f",
+                "interface/cmsis-dap.cfg",
+                "-f",
+                "target/stm32f4x.cfg",
+                "-c",
+                "program build/Debug/Hello.elf verify reset exit"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "focus": true,
+                "echo": true,
+                "clear": false
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^\\s*\\[\\d+\\]\\s*([0-9a-fA-F]+)\\s*\\(\\d+\\)\\s*.*$",
+                        "file": 1,
+                        "location": 2,
+                        "message": 3
+                    }
+                ]
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "detail": "Download code to STM32F4xx by OpenOCD"
+        }
+    ]
+}
