@@ -59,6 +59,16 @@ Let me know if you're trying to set it up or troubleshoot something — happy to
 # how to use
 The overall workflow  
 GDB <----TCP/IP----> OpenOCD <----- USB -----> CMSIS_DAP Debugger <------ SWD ------> STM32 Chip
+## Build
+Dependencies to build the project  
+**CMake**, this repo use CMake to mange the project, the STM32CubeMX support generate Cmake project.  
+**Make**, you can generate the make build system or you can choose ninja.    
+**ARM-GCC**, download from [here](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads),choose the `arm-none-eabi` version based on your OS.  
+**OpenOCD**, use `sudo apt install openocd` on the Ubuntu.  
+
+Genereate Make project    
+`cd "your project root"`  
+`cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/gcc-arm-none-eabi.cmake -S./ -B./build/Debug -G "Unix Makefiles"·`  
 ## Program
 Run OpenOCD command to download program to Chip ROM, [Here](https://github.com/flj512/STM32-VSCode-Hello/blob/3beb2af712062a41f3ef0ae8f0696db22f6a2be2/.vscode/tasks.json#L9) is an example configuration.  
 
